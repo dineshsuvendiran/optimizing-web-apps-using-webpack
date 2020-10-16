@@ -8,3 +8,6 @@ tmp
 ## Directory-based project format:
 .idea/
 /statsgraph/
+
+
+ package-lock.json
