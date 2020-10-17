@@ -65,14 +65,56 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__klondike_scoring__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__klondike_scoring___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__klondike_scoring__);
   
- 
+  
 
   angular.module("solitaire", ["klondike", "ngDraggable"]);
+  
 
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+angular.module("klondike.scoring", [])
+  .service("scoring", [function Scoring() {
+    "use strict";
+
+    this.score = 0;
+
+    this.newGame = function () {
+      this.score = 0;
+    };
+    this.tableauCardTurnedUp = function () {
+      this.score += 5;
+    };
+    this.dropped = function (source, destionation) {
+      this.score += scoreForMoving(source, destionation) || 0;
+    };
+    this.wasteRecycled = function () {
+      this.score = Math.max(this.score - 100, 0);
+    };
+
+    function scoreForMoving(source, destionation) {
+      if (destionation.name === "TableauPile") {
+        if (source.name === "FoundationPile") {
+          return -15;
+        }
+        return 5;
+      }
+      if (destionation.name === "FoundationPile") {
+        if (source.name === "TableauPile" || source.name === "WastePile") {
+          return 10;
+        }
+      }
+    }
+  }]);
 
 
 /***/ })
